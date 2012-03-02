@@ -31,7 +31,7 @@ BEGIN {
         printf("#ifdef %s\n", $1)
         printf("\tprintf(\"%s defined to be %%d\\n\", %s+0);\n", $1, $1)
         printf("#else\n")
-        printf("\tprintf(\"no symbol for %s\\n\");\n", $1, $2)
+        printf("\tprintf(\"no symbol for %s\\n\");\n", $1)
         printf("#endif\n")
         printf("#ifdef %s\n", $2)
         printf("\tpr_pathconf(\"%s =\", argv[1], %s);\n", $1, $2)
