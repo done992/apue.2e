@@ -13,7 +13,7 @@
 void
 print_family(struct addrinfo *aip)
 {
-  printf(" family ");
+  printf("family:   ");
   switch (aip->ai_family) {
   case AF_INET:
     printf("inet");
@@ -30,12 +30,13 @@ print_family(struct addrinfo *aip)
   default:
     printf("unknown");
   }
+  printf("\n");
 }
 
 void
 print_type(struct addrinfo *aip)
 {
-  printf(" type ");
+  printf("type:     ");
   switch (aip->ai_socktype) {
   case SOCK_STREAM:
     printf("stream");
@@ -49,12 +50,13 @@ print_type(struct addrinfo *aip)
   default:
     printf("unknown (%d)", aip->ai_socktype);
   }
+  printf("\n");
 }
 
 void
 print_protocol(struct addrinfo *aip)
 {
-  printf(" protocol ");
+  printf("protocol: ");
   switch (aip->ai_protocol) {
   case 0:
     printf("default");
@@ -71,12 +73,13 @@ print_protocol(struct addrinfo *aip)
   default:
     printf("unknown (%d)", aip->ai_protocol);
   }
+  printf("\n");
 }
 
 void
 print_flags(struct addrinfo *aip)
 {
-  printf("flags");
+  printf("flags:   ");
   if (aip->ai_flags == 0) {
     printf(" 0");
   } else {
@@ -95,6 +98,7 @@ print_flags(struct addrinfo *aip)
       printf(" all");
 #endif
   }
+  printf("\n");
 }
 
 int
@@ -127,12 +131,12 @@ main(int argc, char *argv[])
     print_family(aip);
     print_type(aip);
     print_protocol(aip);
-    printf("\n\thost %s", aip->ai_canonname ? aip->ai_canonname : "-");
+    printf("host:     %s\n", aip->ai_canonname ? aip->ai_canonname : "-");
     if (aip->ai_family == AF_INET) {
       sinp = (struct sockaddr_in *)aip->ai_addr;
       addr = inet_ntop(AF_INET, &sinp->sin_addr, abuf, INET_ADDRSTRLEN);
-      printf(" address %s", addr ? addr : "unknown");
-      printf(" port %d", ntohs(sinp->sin_port));
+      printf("address:  %s\n", addr ? addr : "unknown");
+      printf("port:     %d\n", ntohs(sinp->sin_port));
     }
     printf("\n");
   }
