@@ -61,6 +61,21 @@ serve(int sockfd)
   }
 }
 
+#if defined(_SC_HOST_NAME_MAX)
+static int
+get_hostname_max(void)
+{
+  int n = sysconf(_SC_HOST_NAME_MAX);
+  return (n < 0) ? HOST_NAME_MAX : n;
+}
+#else
+static inline
+int get_hostname_max(void)
+{
+  return HOST_NAME_MAX;
+}
+#endif
+
 int
 main(int argc, char *argv[])
 {
@@ -71,11 +86,8 @@ main(int argc, char *argv[])
 
   if (argc != 1)
     err_quit("usage: ruptimed");
-#ifdef _SC_HOST_NAME_MAX
-  n = sysconf(_SC_HOST_NAME_MAX);
-  if (n < 0)                    /* best guess */
-#endif
-    n = HOST_NAME_MAX;
+
+  n = get_hostname_max();
   host = malloc(n);
   if (host == NULL)
     err_sys("malloc error");
