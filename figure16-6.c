@@ -69,8 +69,8 @@ get_hostname_max(void)
   return (n < 0) ? HOST_NAME_MAX : n;
 }
 #else
-static inline
-int get_hostname_max(void)
+static inline int
+get_hostname_max(void)
 {
   return HOST_NAME_MAX;
 }
