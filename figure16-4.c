@@ -41,6 +41,7 @@ main(int argc, char *argv[])
 
   if (argc != 2)
     err_quit("usage: ruptime hostname");
+
   hint.ai_flags = 0;
   hint.ai_family = 0;
   hint.ai_socktype = SOCK_STREAM;
@@ -49,8 +50,10 @@ main(int argc, char *argv[])
   hint.ai_canonname = NULL;
   hint.ai_addr = NULL;
   hint.ai_next = NULL;
+
   if ((err = getaddrinfo(argv[1], "ruptime", &hint, &ailist)) != 0)
     err_quit("getaddrinfo error: %s", gai_strerror(err));
+
   for (aip = ailist; aip != NULL; aip = aip->ai_next) {
     if ((sockfd = socket(aip->ai_family, SOCK_STREAM, 0)) < 0)
       err = errno;
@@ -61,6 +64,7 @@ main(int argc, char *argv[])
       exit(0);
     }
   }
+
   fprintf(stderr, "can't connect to %s: %s\n", argv[1], strerror(err));
   exit(1);
 }
