@@ -60,7 +60,7 @@ recv_fd(int fd, ssize_t (*userfunc)(int, const void *, size_t))
         } else {
           newfd = -status;
         }
-        nr = -2;
+        nr -= 2;
       }
     }
     if (nr > 0 && (*userfunc)(STDERR_FILENO, buf, nr) != nr)
